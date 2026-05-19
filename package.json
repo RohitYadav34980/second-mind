@@ -1,0 +1,44 @@
+{
+  "name": "second-mind",
+  "version": "1.0.0",
+  "publishedAt": "2026-05-19T00:00:00Z",
+  "keywords": [
+    "claude",
+    "ai",
+    "knowledge-base",
+    "obsidian",
+    "project-management",
+    "documentation",
+    "skill"
+  ],
+  "description": "Living Obsidian-compatible knowledge brain for Claude projects. Scans codebases, builds decision logs, maintains project context across sessions.",
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/second-mind.git"
+  },
+  "homepage": "https://github.com/yourusername/second-mind",
+  "bugs": {
+    "url": "https://github.com/yourusername/second-mind/issues"
+  },
+  "bin": {
+    "second-mind": "bin/install.js"
+  },
+  "files": [
+    "second-mind/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}

@@ -1,0 +1,6 @@
+# Exclude test files and git config
+test.js
+.gitignore
+.npmignore
+.github/
+.obsidian

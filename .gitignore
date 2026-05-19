@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+.env
+
+# Development / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Testing / Local Data
+brain/
+.claude/
+temp/
+tmp/
+.obsidian

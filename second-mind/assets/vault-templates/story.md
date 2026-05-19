@@ -1,0 +1,24 @@
+---
+tags: [story, history]
+last_updated: ${DATE}
+---
+
+# Project Story
+
+## Origin
+${WHY_WAS_THIS_STARTED_PROBLEM_IT_SOLVES}
+
+## Phase 1 — ${PHASE_NAME}
+${WHAT_WAS_BUILT_WHAT_WORKED_WHAT_FAILED_TIMELINE}
+
+## Key Pivot: ${DESCRIPTION}
+${WHAT_CHANGED_WHY_DID_IT_HAPPEN}
+
+## Phase 2 — ${PHASE_NAME}
+${CONTINUE_CHRONOLOGICALLY}
+
+## Where we are now
+${CURRENT_STATE_AS_NATURAL_NEXT_CHAPTER}
+
+## What's next
+${WHAT_IS_THE_NEXT_CHAPTER_PROSE_SUMMARY}
