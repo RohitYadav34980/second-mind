@@ -1,6 +1,6 @@
 # Obsidian Vault Templates
 
-Exact templates for every file type in the Second Mind brain. Use these for consistency across all vault files.
+Exact templates for every file type in the Second Mind vault. Use these for consistency across all vault files.
 
 ---
 
@@ -297,7 +297,7 @@ tags: [index, map]
 
 # Map of Content
 
-Welcome to the Second Mind brain. Everything is here.
+Welcome to the Second Mind vault. Everything is here.
 
 ## 🚀 Start here
 

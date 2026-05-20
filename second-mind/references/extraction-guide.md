@@ -2,7 +2,7 @@
 
 How to extract structured knowledge from unstructured text: git logs, chat transcripts, code comments, issues, documentation.
 
-Used by `scan_chats.py` and `scan_project.py` to understand the **why** behind code.
+The agent uses these principles to understand the **why** behind code decisions and architectural choices.
 
 ---
 
@@ -379,50 +379,3 @@ Extracted:
 - Status: "Proposed, not yet finalized"
 - Open question: "Will batching work with real-time model?"
 ```
-
----
-
-## Implementation in Python
-
-```python
-def extract_decisions(text):
-    """Extract decisions from unstructured text."""
-    decision_keywords = [
-        "decided", "chose", "switching", "will use", "agreed",
-        "committed", "settled on", "deprecating", "switched to"
-    ]
-    
-    decisions = []
-    sentences = text.split('. ')
-    
-    for sent in sentences:
-        if any(kw in sent.lower() for kw in decision_keywords):
-            decisions.append({
-                'text': sent.strip(),
-                'confidence': 'high' if sent.count(kw) > 1 else 'medium',
-                'needs_review': False
-            })
-    
-    return decisions
-
-def extract_questions(text):
-    """Extract open questions from unstructured text."""
-    question_keywords = [
-        "not sure", "need to figure out", "unclear", "debating",
-        "should we", "?", "still unsure", "haven't decided"
-    ]
-    
-    questions = []
-    sentences = text.split('. ')
-    
-    for sent in sentences:
-        if '?' in sent or any(kw in sent.lower() for kw in question_keywords):
-            questions.append({
-                'text': sent.strip(),
-                'status': 'open',
-                'answered': False
-            })
-    
-    return questions
-```
-

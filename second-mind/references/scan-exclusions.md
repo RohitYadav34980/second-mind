@@ -1,6 +1,6 @@
 # Scan Exclusions
 
-Patterns and file paths to skip during project scans. Used by `scan_project.py` and `scan_chats.py`.
+Patterns and file paths to skip during project scans. The agent uses these patterns when building the Second Mind vault to avoid noise and maintain accuracy.
 
 ## Directories to exclude
 
@@ -163,37 +163,6 @@ Skip files with these extensions:
 - `.nyc_output/` — **EXCLUDE**
 - `htmlcov/` — **EXCLUDE**
 
-## Implementation in scan_project.py
-
-```python
-EXCLUDE_DIRS = {
-    'node_modules', '.git', 'venv', 'env', '.venv', '__pycache__',
-    '.pytest_cache', 'dist', 'build', '*.egg-info', '.next', '.nuxt',
-    'coverage', '.coverage', 'htmlcov', '.nyc_output', '.tox', '.cache',
-    '.mypy_cache', '.dmypy.json', '.pyre', 'target', '.gradle', '.idea',
-    '.vscode', '.DS_Store', '.env', 'tmp', 'temp', 'logs', '.turbo', '.swc',
-    'out', '.vercel', '.amplify', 'vendor', 'third_party', 'external',
-    '.generated', 'generated'
-}
-
-EXCLUDE_FILES = {
-    '*.lock', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml',
-    'Pipfile.lock', 'poetry.lock', 'Gemfile.lock', '.env',
-    '*.log', '*.pyc', '*.pyo', '*.pyd', '.Python', '*.so',
-    '*.dll', '*.dylib', '*.exe', '*.class', '*.jar', '*.o',
-    '*.min.js', '*.min.css', '*.min.map', '*.map', '*.swp',
-    '*~', '.DS_Store', 'Thumbs.db'
-}
-
-# Usage in glob:
-import fnmatch
-def should_scan(filepath):
-    for exclude in EXCLUDE_DIRS | EXCLUDE_FILES:
-        if fnmatch.fnmatch(filepath, exclude):
-            return False
-    return True
-```
-
 ## Rationale
 
 - **Speed:** Excluding large directories (node_modules, .git) dramatically reduces scan time
@@ -203,7 +172,7 @@ def should_scan(filepath):
 
 ## Updates
 
-If scanning a project and finding too much noise, add the specific folder to EXCLUDE_DIRS and re-run the scan.
+If scanning a project and finding too much noise, add the specific folder to the exclusion patterns and re-run the scan.
 
-If finding the scan is too slow, profile with larger exclusions first, then gradually reduce them.
+If scanning is too slow, profile with larger exclusions first, then gradually reduce them.
 

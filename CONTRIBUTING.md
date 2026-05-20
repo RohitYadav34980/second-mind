@@ -10,7 +10,7 @@ This project adheres to the [Contributor Covenant Code of Conduct](./CODE_OF_CON
 
 ### Reporting Bugs
 
-Before creating bug reports, check the [issue list](https://github.com/yourusername/second-mind/issues) to avoid duplicates.
+Before creating bug reports, check the [issue list](https://github.com/RohitYadav34980/second-mind/issues) to avoid duplicates.
 
 When you create a bug report, include:
 - **Clear title and description**
@@ -22,7 +22,7 @@ When you create a bug report, include:
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/yourusername/second-mind/issues).
+Enhancement suggestions are tracked as [GitHub issues](https://github.com/RohitYadav34980/second-mind/issues).
 
 When creating an enhancement suggestion, include:
 - **Clear title and description**
@@ -60,7 +60,7 @@ When creating an enhancement suggestion, include:
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/second-mind.git
+git clone https://github.com/RohitYadav34980/second-mind.git
 cd second-mind
 
 # Install dependencies
@@ -243,8 +243,8 @@ Follow [Semantic Versioning](https://semver.org/):
 
 ## Getting Help
 
-- **Questions?** — Open a [GitHub Discussion](https://github.com/yourusername/second-mind/discussions)
-- **Issues?** — Open a [GitHub Issue](https://github.com/yourusername/second-mind/issues)
+- **Questions?** — Open a [GitHub Discussion](https://github.com/RohitYadav34980/second-mind/discussions)
+- **Issues?** — Open a [GitHub Issue](https://github.com/RohitYadav34980/second-mind/issues)
 - **Chat?** — Join our [community Slack](https://slack.secondmind.dev)
 
 ## Recognition

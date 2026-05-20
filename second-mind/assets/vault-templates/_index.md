@@ -4,7 +4,7 @@ tags: [index, map]
 
 # Map of Content
 
-Welcome to the Second Mind brain.
+Welcome to the Second Mind vault.
 
 ## 🚀 Start here
 

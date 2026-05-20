@@ -1,0 +1,26 @@
+{
+  "name": "second-mind-cli",
+  "version": "1.0.0",
+  "description": "CLI to install Second Mind skill for AI coding assistants",
+  "type": "module",
+  "bin": {
+    "second-mind": "../bin/install.js"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node16 --outfile=../bin/install.js --format=cjs",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "ora": "^8.1.1",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/prompts": "^2.4.9",
+    "esbuild": "^0.20.1",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

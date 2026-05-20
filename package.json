@@ -1,6 +1,6 @@
 {
   "name": "second-mind",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "publishedAt": "2026-05-19T00:00:00Z",
   "keywords": [
     "claude",
@@ -12,15 +12,14 @@
     "skill"
   ],
   "description": "Living Obsidian-compatible knowledge brain for Claude projects. Scans codebases, builds decision logs, maintains project context across sessions.",
-  "author": "Your Name <your.email@example.com>",
-  "license": "MIT",
+  "author": "Rohit Yadav <rohityadav34980@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/second-mind.git"
+    "url": "git+https://github.com/RohitYadav34980/second-mind.git"
   },
-  "homepage": "https://github.com/yourusername/second-mind",
+  "homepage": "https://github.com/RohitYadav34980/second-mind",
   "bugs": {
-    "url": "https://github.com/yourusername/second-mind/issues"
+    "url": "https://github.com/RohitYadav34980/second-mind/issues"
   },
   "bin": {
     "second-mind": "bin/install.js"
@@ -28,10 +27,10 @@
   "files": [
     "second-mind/",
     "bin/",
-    "README.md",
-    "LICENSE"
+    "README.md"
   ],
   "scripts": {
+    "build": "npm run build --prefix cli",
     "test": "node test.js"
   },
   "engines": {

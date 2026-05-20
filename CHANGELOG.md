@@ -85,10 +85,10 @@ For security vulnerabilities, please email security@secondmind.dev instead of us
 ## Maintenance
 
 This project is actively maintained. For questions or issues:
-- Open an issue on [GitHub](https://github.com/yourusername/second-mind/issues)
-- Join our [discussions](https://github.com/yourusername/second-mind/discussions)
+- Open an issue on [GitHub](https://github.com/RohitYadav34980/second-mind/issues)
+- Join our [discussions](https://github.com/RohitYadav34980/second-mind/discussions)
 
 ---
 
-[Unreleased]: https://github.com/yourusername/second-mind/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/second-mind/releases/tag/v1.0.0
+[Unreleased]: https://github.com/RohitYadav34980/second-mind/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/RohitYadav34980/second-mind/releases/tag/v1.0.0
