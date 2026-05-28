@@ -305,6 +305,17 @@ Welcome to the Second Mind vault. Everything is here.
 - [[story]] — How we got here
 - [[roadmap]] — Where we're going
 
+## 📖 Guides (Code Wiki)
+
+Technical guides and developer workflows (Supabase-style).
+
+- [[guides/database]] — Database engine, schemas, migrations, policies
+- [[guides/auth-security]] — Auth flows, providers, route protection, RBAC
+- [[guides/api-integrations]] — API endpoints, input/output/exception models, external services
+- [[guides/deployment]] — Hosting, CI/CD pipeline, environment configs
+- [[guides/workflows]] — Local setup, commands, testing strategies
+- [[guides/standards]] — Coding and documentation standards
+
 ## 📚 Knowledge Base
 
 The what and why of this project.
@@ -359,6 +370,300 @@ Chat session logs.
 
 ---
 
+## Template 8: Database & Storage Guide
+
+**File:** `guides/database.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial database guide creation.
+---
+
+# Database & Storage Guide
+
+## Overview
+<1-2 sentences summarizing the database engine, hosting setup, and primary storage mechanism.>
+
+## Configuration & Connection
+<Detail how the application connects to the database. Include env variables (e.g., `DATABASE_URL`), connection pools, and port configurations.>
+
+## Core Schemas & Entities
+<Detail key tables, collections, or schemas. For each schema/entity, provide:>
+- **Entity/Table Name**: `<name>`
+- **Description**: `<purpose of table>`
+- **Columns/Fields**:
+  - `id` (UUID, PK) — Unique identifier
+  - `<column>` (type) — Description of column
+- **Indexes**: `<list of indexes and why they exist>`
+
+## Migrations
+- **Tool**: `<migration tool, e.g. Prisma, Flyway, Knex>`
+- **Procedure**: `<how to run migrations in development and production>`
+
+## Row-Level Security (RLS) & Access Policies
+<Detail database-level permissions or RLS policies (e.g., Postgres RLS, Supabase Policies) that restrict data access.>
+
+## Storage Buckets & Assets
+- **Engine**: `<e.g. S3, Supabase Storage>`
+- **Buckets**:
+  - `<bucket-name>`: `<permissions and path patterns>`
+
+## Performance & Caching
+<Detail query optimizations, indexes, materialized views, or Redis caching layers used for database queries.>
+```
+
+---
+
+## Template 9: Authentication & Security Guide
+
+**File:** `guides/auth-security.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial auth and security guide creation.
+---
+
+# Authentication & Security Guide
+
+## Overview
+<High-level description of the authentication system, identity providers, and overall security posture.>
+
+## Authentication Flows
+<Step-by-step description of the user registration, login, logout, and token refresh mechanisms.>
+
+## Providers & Third-Party Auth
+- **Provider**: `<e.g., Supabase Auth, Clerk, Auth0>`
+- **Config**: `<key config variables and callback URLs>`
+
+## Session Management & Tokens
+- **Mechanism**: `<e.g. JWT, HTTP-only Cookies>`
+- **Lifetimes**: Access Token (`<duration>`), Refresh Token (`<duration>`)
+
+## Route Protection & Middleware
+<Detail how routes are secured on frontend, backend, or Edge level. Include code snippet references or file paths for middleware.>
+
+## Role-Based Access Control (RBAC)
+<Define user roles (e.g. Admin, Member, Guest) and permissions matrix.>
+
+## Sensitive Data Handling
+<Detail encryption at rest, environment secret management, and compliance considerations (e.g., GDPR, PCI).>
+```
+
+---
+
+## Template 10: API & Integrations Guide
+
+**File:** `guides/api-integrations.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial API and integration guide creation.
+---
+
+# API & Integrations Guide
+
+## Overview
+<Describe the API protocols used (REST, GraphQL, tRPC, WebSockets) and high-level structure.>
+
+## Endpoint Reference & Specs
+<For each major API domain, detail the key endpoints following the Berkeley & IBM principles: what it does, parameters (type, default, required), returns, and exceptions.>
+
+### `POST /api/v1/auth/login`
+- **Description**: Authenticates user and issues sessions.
+- **Parameters (Body)**:
+  - `email` (string, required): User email address.
+  - `password` (string, required): Plaintext password.
+- **Returns (200 OK)**:
+  - `token` (string): JWT bearer token.
+  - `user` (object): User profile details.
+- **Exceptions**:
+  - `400 Bad Request`: Missing fields.
+  - `401 Unauthorized`: Invalid credentials.
+
+## Rate Limiting & Security
+- **Policy**: `<e.g., 100 requests per minute per IP>`
+- **Headers**: `X-RateLimit-Limit`, `X-RateLimit-Remaining`
+
+## Error Handling Standards
+- **Format**: All error responses return:
+  ```json
+  {
+    "error": {
+      "code": "<errorCode>",
+      "message": "<humanReadableMessage>",
+      "details": {}
+    }
+  }
+  ```
+
+## External Integrations & Dependencies
+- **Service Name**: `<e.g. Stripe, SendGrid>`
+- **Role**: `<what it is used for>`
+- **Webhooks**: `<endpoint URL and secret configuration>`
+```
+
+---
+
+## Template 11: Deployment & Environments Guide
+
+**File:** `guides/deployment.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial deployment and env guide creation.
+---
+
+# Deployment & Environments Guide
+
+## Overview
+<Summarize the hosting environments (Dev, Staging, Prod) and cloud hosting providers.>
+
+## Hosting & Infrastructure
+- **Provider**: `<e.g. Vercel, AWS, Render>`
+- **Services Used**: `<e.g. Serverless Functions, ECS, CDN>`
+
+## CI/CD Pipeline
+- **Platform**: `<e.g. GitHub Actions, GitLab CI>`
+- **Config file**: `.github/workflows/deploy.yml`
+- **Triggers**:
+  - Staging: Push to `main` branch.
+  - Production: Release tag publish.
+
+## Environment Configurations
+<Specify all required environment variables.>
+- `NODE_ENV`: `production` | `development`
+- `DATABASE_URL`: Connection string (Secret)
+
+## Monitoring & Observability
+- **Logging**: `<e.g. Datadog, Sentry>`
+- **Metrics/Alerts**: `<e.g. Grafana, Prometheus>`
+```
+
+---
+
+## Template 12: Development Workflows & Testing Guide
+
+**File:** `guides/workflows.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial workflow and testing guide creation.
+---
+
+# Development Workflows & Testing Guide
+
+## Local Setup
+1. Clone the repository.
+2. Install dependencies: `npm install` or equivalent.
+3. Configure environment variables: copy `.env.example` to `.env`.
+4. Start local databases/services: `docker-compose up -d`.
+5. Start dev server: `npm run dev`.
+
+## Common Commands
+- `npm run build` — Build production bundle
+- `npm test` — Run test suite
+- `npm run lint` — Lint and format check
+
+## Adding a New Entity or Route
+1. **Schema**: Add entity file in `src/entities/`.
+2. **Migration**: Run `npm run db:migrate-create`.
+3. **Route**: Define route handler in `src/routes/` following coding guidelines.
+4. **Docs**: Document API in [[guides/api-integrations]].
+
+## Testing Strategy
+- **Unit Testing**: Run with `jest` (files in `*.test.ts`). Focuses on pure logic and services.
+- **Integration Testing**: Runs on local DB. Verifies DB and handler flow.
+- **E2E Testing**: Run with Playwright. Verifies user flows.
+```
+
+---
+
+## Template 13: Code Documentation & Coding Standards
+
+**File:** `guides/standards.md`
+
+```markdown
+---
+owner: <owner-name>
+last_updated: <YYYY-MM-DD>
+version: <version-number>
+history:
+  - version: 1.0.0
+    date: <YYYY-MM-DD>
+    author: <author-name>
+    description: Initial standards guide creation.
+---
+
+# Code Documentation & Coding Standards
+
+## Docstring Standards
+Every file, class, and public function must have documentation block explaining:
+- **Purpose**: A clear 1-2 sentence description.
+- **Parameters**: Type, default value, requirement flag.
+- **Returns**: Expected return types and structure.
+- **Exceptions**: Error codes and conditions under which they are thrown.
+
+### Example (TypeScript/JSDoc)
+```typescript
+/**
+ * Retrieves a user profile by their unique ID.
+ * 
+ * @param {string} userId - The unique identifier of the user (UUID format).
+ * @param {boolean} [includePrivate=false] - Whether to include private profile fields.
+ * @returns {Promise<UserProfile>} The retrieved user profile object.
+ * @throws {NotFoundError} Thrown when the userId does not exist.
+ */
+async function getUserProfile(userId: string, includePrivate = false): Promise<UserProfile> { ... }
+```
+
+## Naming Conventions
+- **Folders/Files**: lowercase and kebab-case (e.g. `auth-security.md`).
+- **Variables/Functions**: camelCase.
+- **Classes/Types/Interfaces**: PascalCase.
+- **Constants**: UPPER_SNAKE_CASE.
+
+## Folder Organization
+- Keep related source files close together in domain folders.
+- Technical documentation is stored strictly under `mind/` and wiki guides under `mind/guides/`.
+```
+
+---
+
 ## Usage Notes
 
 1. **YAML frontmatter** required on all files (even if sparse)
@@ -368,3 +673,5 @@ Chat session logs.
 5. **Tags** for categorization — consistent across similar files
 6. **Markdown formatting** — keep it simple, Obsidian-friendly (bold, italic, headers, lists, code fences)
 7. **Timestamps** — ISO format (YYYY-MM-DD or YYYY-MM-DD HH:MM)
+8. **Code Wiki & Guides** — located under `guides/`, utilizing standard docstring inputs/outputs/exceptions conventions, defined owners, and a revision log history.
+
