@@ -119,4 +119,4 @@ Once installed and loaded into your assistant, verify that the integration is wo
    ```
    /second-mind
    ```
-3. The assistant should respond by describing the available commands (`init`, `restore`, `capture`, `update`, `overview`, `onboarding`).
+3. The assistant should respond by describing the available commands (`init`, `wiki`, `restore`, `capture`, `update`, `overview`, `onboarding`).

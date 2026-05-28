@@ -1,52 +1,86 @@
 ---
 name: second-mind
-description: Builds and maintains a living Obsidian-compatible knowledge vault for your codebase. Trigger with commands like "second-mind init", "second-mind restore", "second-mind capture", "second-mind update", "second-mind overview", or "second-mind onboarding". Provides automated context restoration and persistent documentation. Use this skill whenever the user types a command.
+description: Builds and maintains a living, Obsidian-compatible technical code wiki and guides for your codebase. Automatically scans codebases, captures decisions, and generates high-fidelity technical guides (Database, Auth, APIs, Deployment, and Workflows) while leveraging search tools to verify API contracts, dependencies, and user requirements. Trigger with commands like "second-mind init", "second-mind restore", "second-mind wiki", "second-mind capture", "second-mind update", "second-mind overview", or "second-mind onboarding".
 ---
 
-# Second Mind Skill
+# Second Mind
 
-**Build and maintain a living Obsidian-compatible knowledge vault that restores full project context at every session start.**
+Build and maintain a living Obsidian-compatible technical code wiki and guides that restore full project context at every session start.
 
-The vault scans your codebase, git history, issues, and chat logs—then builds a complete knowledge base from scratch using native agent tools. Every session updates the vault automatically so you never lose context.
+The vault scans your codebase, git history, issues, and chat logs—then builds a complete knowledge base and technical wiki from scratch using native agent tools, backed by Google search to verify API specifications, workflows, and configurations. Every session updates the vault automatically so you never lose context.
 
----
+## When to Use This Skill
 
-## QUICK START
+- When starting a new project and you want to initialize a structured developer wiki.
+- When you want to explicitly generate or update all technical guides in your code wiki.
+- Before closing a development session to save progress, decision history, and current blocker states.
+- When starting a new session to get immediately caught up on where you left off.
+- When introducing a new database, API endpoint, or authentication flow and you need to document it.
+- When generating a 10-minute START-HERE newcomer onboarding guide.
 
-Run commands in this format:
+## What This Skill Does
+
+1. **Vault Initialization (`init` mode)**: Scans files, git history, and configurations to build a structured `./mind/` vault folder containing roadmap, story, index, and guides.
+2. **Code Wiki & Guides Generation (`wiki` mode)**: Builds or explicitly updates dedicated, high-fidelity guides for database schemas (with RLS), auth middleware, API parameters (inputs/outputs/exceptions), hosting, workflows, and standards.
+3. **Context Restoration (`restore` mode)**: Reads the latest session state and briefs you on what was working, broken, and suggestions for next steps.
+4. **Google Search Verification**: Uses search tool to research dependencies, verify third-party API contracts, and gather best practices to ensure high-fidelity documentation.
+5. **Session Progress Logging (`update` mode)**: Analyzes the session's chat transcript to update current status, next steps, open questions, and affected wiki guides.
+6. **Overview and Onboarding Creation (`overview` & `onboarding` modes)**: Generates onboarding guides and system overviews from the vault.
+
+## How to Use
+
+### Basic Usage
+
+To initialize the vault and guides for a project:
 ```
-/second-mind <command>
+/second-mind init
 ```
 
-Available commands:
-- `init` — Initialize a new vault for this project
-- `restore` — Restore context from the last session
-- `capture` — Capture a decision or insight
-- `update` — End-of-session: save session and update vault
-- `overview` — Generate fresh project overview
-- `onboarding` — Generate onboarding guide for newcomers
+To explicitly generate or update all technical guides in your code wiki:
+```
+/second-mind wiki
+```
 
----
+To restore the context of the project at the start of a session:
+```
+/second-mind restore
+```
 
-## THE 6 MODES
+To update the vault and log your session changes at the end of a session:
+```
+/second-mind update
+```
 
-Detect command and execute corresponding mode:
+### Advanced Usage
 
-| Command | Purpose |
-|---------|---------|
-| **`init`** | First-time setup: scan codebase, chats, git, issues → build complete vault |
-| **`restore`** | Read latest session + current state → brief the user on where they left off |
-| **`capture`** | Lightweight: extract insight/decision from message → append to vault without full scan |
-| **`update`** | Analyze this conversation → write session file + update context + increment decisions |
-| **`overview`** | Synthesize all vault files → generate fresh overview.md |
-| **`onboarding`** | Write START-HERE.md for someone with zero context → readable in 10 minutes |
+To capture an architectural decision or insight mid-session:
+```
+/second-mind capture Switched to PostgreSQL for JSONB support
+```
 
----
+To generate a fresh project overview markdown:
+```
+/second-mind overview
+```
 
-## VAULT STRUCTURE
+To generate a START-HERE.md newcomer onboarding guide:
+```
+/second-mind onboarding
+```
 
-All files live at `./mind/` in the project root.
+### Detailed Mode Instructions
 
+- **`init`**: Checks if the vault exists. Prompts 3 setup questions (team/solo, commit to git, issues tracker URL). Scans codebase using Glob/Grep and searches Google to collect API contracts and schema structures. Creates directories and writes guides, context, roadmap, and story files.
+- **`wiki`**: Explicitly scans the codebase, reads configuration files, and uses Google Search to research third-party APIs or dependency schemas. Writes or updates all files in `./mind/guides/` (database.md, auth-security.md, api-integrations.md, deployment.md, workflows.md, standards.md) following Berkeley & IBM guidelines.
+- **`restore`**: Read-only. Loads `latest.md` and context files (`current-state.md`, `open-questions.md`, `next-steps.md`) and outputs a structured session briefing.
+- **`capture`**: Extracts the key decision/insight from the message. Appends to `decision-log.md`. For major decisions, writes an ADR (Architecture Decision Record) file.
+- **`update`**: Analyzes the active conversation transcript. Extracts decisions, changes made, blockers, questions, and next steps. Generates timestamped session file, overwrites `latest.md`, updates current-state and next-steps, updates affected guides in `guides/`, and commits to git.
+- **`overview`**: Reads and synthesizes all vault files to write a fresh `./mind/overview.md` with a prose-only project story.
+- **`onboarding`**: Reads vault files to generate a plain-English `./mind/START-HERE.md` onboarding guide readable in under 10 minutes.
+
+### Vault Structure
+
+All files live at `./mind/` in the project root:
 ```
 ./mind/
 │
@@ -56,6 +90,14 @@ All files live at `./mind/` in the project root.
 ├── overview.md                      # Generated fresh each time — never cached
 │
 ├── _index.md                        # Map of Content — links to every section
+│
+├── guides/                          # Code Wiki & Guides (Supabase-style)
+│   ├── database.md                  # Database, schema, and queries
+│   ├── auth-security.md             # Authentication and security
+│   ├── api-integrations.md          # API contracts and third-party APIs
+│   ├── deployment.md                # Deployment and hosting details
+│   ├── workflows.md                 # Local setup and workflow procedures
+│   └── standards.md                 # Code documentation standards
 │
 ├── knowledge-base/
 │   ├── architecture.md              # System design, layers, patterns, rationale
@@ -83,182 +125,9 @@ All files live at `./mind/` in the project root.
     └── scan-history.json            # Log of every scan and session update
 ```
 
----
-
-## MODE 1: `init`
-
-### Trigger:
-User types: `init`
-
-If `_meta/initialized.json` already exists, ask: "Vault already initialized. Reinitialize? (yes/no)"
-```
-Setting up your Second Mind. Three quick questions:
-
-1. Is this a team project or solo? (team/solo)
-2. Should I commit ./mind/ to git? (yes/no — default yes)
-3. Do you have issues or PRs tracked somewhere? (GitHub/GitLab/Linear URL, or press Enter to skip)
-```
-
-### Execution sequence:
-```
-1.  Write answers → initialized.json
-2.  Create ./mind/ directory structure
-3.  Use Glob and Grep tools to scan the codebase → extract modules, components, TODOs, dependencies
-4.  Scan README + /docs → extract purpose, setup, architecture notes
-5.  Scan config files → extract tech stack, env vars
-6.  If .git/ exists → use command line tools to read git history logs for extraction
-7.  If issues URL provided → fetch and extract open issues, past discussions
-8.  Scan available chat logs or ask the user for past chat exports if necessary
-9.  Combine all scans → use your native synthesis and reasoning to process the data
-10. Build knowledge-base/ from scanned data
-11. Build decisions/ — one entry per decision found in git + chats
-12. Build context/current-state.md from TODOs, commits, chat context
-13. Build context/open-questions.md from unanswered questions
-14. Build context/next-steps.md from planned work
-15. Write story.md — prose narrative of project evolution
-16. Write roadmap.md — future goals
-17. Synthesize context to write START-HERE.md using Write tool
-18. Build _index.md with wikilinks to every file
-19. If git commit enabled: git add mind/ && git commit -m "chore: init second mind vault"
-20. Write _meta/initialized.json + scan-history.json
-21. Report: "Vault initialized. Created X files, captured Y decisions, Z open questions."
-```
-
-**Exclusions:** node_modules/, .git/, venv/, __pycache__/, dist/, build/, .next/, coverage/, .env, *.lock, *.log
-
----
-
-## MODE 2: `restore`
-
-### Trigger:
-User types: `restore`
-
-Read-only. No files written.
-
-### Execution:
-```
-1. Read: sessions/latest.md
-2. Read: context/current-state.md
-3. Read: context/open-questions.md
-4. Read: context/next-steps.md
-5. Deliver brief in this format:
-```
-
-Output to user:
-```
-🧠 Second Mind — Session Restore
-
-📅 Last session: [date and time from latest.md]
-🎯 You were working on: [task from latest.md]
-
-Current status:
-  ✅ Working: [from current-state.md]
-  🔧 In progress: [from current-state.md]
-  ❌ Broken: [from current-state.md]
-
-❓ Open questions:
-  - [from open-questions.md, up to 5]
-
-👉 Suggested first step: [top item from next-steps.md]
-```
-
----
-
-## MODE 3: `capture`
-
-### Trigger:
-User types: `capture` followed by a decision or insight
-
-Lightweight extraction. No full scan.
-
-### Execution:
-```
-1. Extract key decision or insight from user message
-2. Show to user: "Capturing this — confirm? [text]"
-3. On confirm:
-   a. Append to decisions/decision-log.md with date + #quick-capture tag
-   b. If significant architectural/product decision:
-      → Create decisions/<YYYY-MM-DD>-<slug>.md (ADR template)
-   c. Confirm: "Captured. Saved to decisions/decision-log.md"
-```
-
----
-
-## MODE 4: `update`
-
-### Trigger:
-User types: `update`
-
-Analyze full conversation and update vault.
-
-### Execution:
-```
-1.  Analyze entire conversation
-2.  Extract: decisions made this session
-3.  Extract: what was built/changed
-4.  Extract: what is broken/unfinished
-5.  Extract: new open questions
-6.  Extract: updated next steps
-7.  Write: sessions/<YYYY-MM-DD-HHMM>.md (session template)
-8.  Overwrite: sessions/latest.md (copy of above)
-9.  Update: context/current-state.md
-10. Update: context/open-questions.md (add new, mark resolved)
-11. Update: context/next-steps.md
-12. Append: decisions/decision-log.md with this session's decisions
-13. Create: individual decisions/<YYYY-MM-DD>-<slug>.md for major choices
-14. Update: story.md if significant pivot or milestone
-15. Update: _meta/scan-history.json (append session entry)
-16. If git enabled: git add mind/ && git commit -m "mind: session <YYYY-MM-DD>"
-17. Report: "Session saved. [N] decisions captured, [N] files updated."
-```
-
----
-
-## MODE 5: `overview`
-
-### Trigger:
-User types: `overview`
-
-Synthesize all vault files and write fresh overview.md.
-
-### Execution:
-```
-1. Read all files in ./mind/
-2. Synthesize files and use Write tool to create ./mind/overview.md using template
-3. Report: "Overview generated at mind/overview.md"
-```
-
-**Project Story section must be prose paragraphs — no bullet points.**
-
----
-
-## MODE 6: `onboarding`
-
-### Trigger:
-User types: `onboarding`
-
-Write START-HERE.md for newcomers.
-
-### Execution:
-```
-1. Read: story.md, architecture.md, tech-stack.md, decision-log.md, roadmap.md, current-state.md
-2. Synthesize files and use Write tool to create ./mind/START-HERE.md using template
-3. Apply rules:
-   - No jargon without explanation
-   - Every technical term gets one-line plain-English definition
-   - For someone with zero context
-   - Welcoming tone, not condescending
-   - Readable in under 10 minutes
-   - Must answer "why does this exist?" before technical content
-4. Report: "Onboarding doc generated at mind/START-HERE.md"
-```
-
----
-
-## QUALITY RULES
+### Quality Rules
 
 Apply to every file generated:
-
 1. **Never invent.** If info not found, write `_Not found — to be defined._`
 2. **Mark uncertainty.** Unconfirmed items get `[Proposed]` prefix.
 3. **Track superseded.** Old decisions stay marked `[Superseded by #slug]`.
@@ -266,130 +135,120 @@ Apply to every file generated:
 5. **Prose for narrative.** story.md, START-HERE.md, overview "Project Story" = readable prose, no bullets.
 6. **Flag gaps.** If section has no data: `_Gap: [what is missing] — needs discussion._`
 7. **Wikilinks everywhere.** References to vault docs use `[[filename]]` syntax.
+8. **Verify with Web Search.** When generating or updating guides (`guides/` files), perform a web search to verify third-party API contracts, documentation, or tech stack schemas.
+9. **Precise Input/Output/Exception Definitions.** When documenting APIs or integrations in `api-integrations.md`, define all parameters, types, default values, returned data models, and handled error exceptions explicitly, adhering to Berkeley & IBM documentation guidelines.
+10. **Defined Ownership and Versioning.** All codebase guides must include a YAML frontmatter specifying the owner, last updated date, version, and a chronological history of major edits.
 
----
+### How the Agent Works
 
-## HOW THE AGENT WORKS
+All modes use native coding tools:
+- **Glob** — Find all source files (respecting exclusions)
+- **Grep** — Extract TODOs, function names, class definitions, dependencies
+- **Read** — Load README, config files, docs, .env.example
+- **Write** — Create all vault files in ./mind/
+- **Search Web** — Lookup third-party APIs, libraries, workflows, and specifications to verify documentation details
+- **Bash** — Run git commands (if commit enabled)
 
-### Command Detection
-
+#### Command Detection
 When the user types a command, the agent detects it and routes to the corresponding mode:
-
 ```
 User input format: <command>
 
 Commands:
   init        → MODE 1: Initialize vault
-  restore     → MODE 2: Restore context
-  capture     → MODE 3: Capture decision
-  update      → MODE 4: End-of-session
-  overview    → MODE 5: Generate overview
-  onboarding  → MODE 6: Generate onboarding docs
+  wiki        → MODE 2: Generate/update technical guides
+  restore     → MODE 3: Restore context
+  capture     → MODE 4: Capture decision
+  update      → MODE 5: End-of-session
+  overview    → MODE 6: Generate overview
+  onboarding  → MODE 7: Generate onboarding docs
 ```
 
-### Tools Used
+#### Execution Flow by Command
 
-All modes use native coding tools:
-
-- **Glob** — Find all source files (respecting exclusions)
-- **Grep** — Extract TODOs, function names, class definitions, dependencies
-- **Read** — Load README, config files, docs, .env.example
-- **Write** — Create all vault files in ./mind/
-- **Bash** — Run git commands (if commit enabled)
-
-### Execution Flow by Command
-
-#### `init`
+##### `init`
 ```
 1. Ask 3 setup questions → write _meta/initialized.json
 2. Glob: find all source files (skip exclusions)
 3. Grep: extract TODOs, classes, functions from code
 4. Read: README, package.json, requirements.txt, .env.example, /docs/
-5. Build knowledge-base/ files from extracted data
-6. Build context/ files from TODOs and dependencies
-7. Write story.md, roadmap.md, _index.md
-8. Generate START-HERE.md using ONBOARDING logic
-9. Write _meta/scan-history.json
-10. Git commit if enabled
+5. Search the web to verify API structures and schemas for dependencies found in package.json/requirements.txt
+6. Build knowledge-base/ and guides/ files from scanned data and research
+7. Build context/ files from TODOs and dependencies
+8. Write story.md, roadmap.md, _index.md
+9. Generate START-HERE.md using ONBOARDING logic
+10. Write _meta/scan-history.json
+11. Git commit if enabled
 ```
 
-#### `restore`
+##### `wiki`
+```
+1. Glob: find all source files (skip exclusions)
+2. Grep: extract database queries, auth middleware patterns, API endpoints, deployment scripts from code
+3. Read: README, package.json, requirements.txt, .env.example, config files
+4. Search the web to verify package API schemas, Postgres/SQL best practices, JWT session conventions, or cloud configs
+5. Build/update all guides in `./mind/guides/` (database.md, auth-security.md, api-integrations.md, deployment.md, workflows.md, standards.md) following Berkeley & IBM guidelines
+6. Update the Guides section in `_index.md`
+7. Report: "Guides updated: guides/database.md, guides/auth-security.md, etc."
+```
+
+##### `restore`
 ```
 1. Read: sessions/latest.md
 2. Read: context/{current-state,open-questions,next-steps}.md
 3. Format and present as formatted brief to user
 ```
 
-#### `capture`
+##### `capture`
 ```
-1. Extract decision/insight from user message following [[references/extraction-guide.md]]
+1. Extract decision/insight from user message following extraction guidelines
 2. Append to decisions/decision-log.md with timestamp and quick-capture tag
 3. If significant architectural decision:
    → Create decisions/<YYYY-MM-DD>-<slug>.md using ADR template
 4. Confirm to user
 ```
 
-#### `update`
+##### `update`
 ```
-1. Analyze full conversation transcript (this session)
-2. Extract: decisions made, what was built, blockers, questions, next steps
-3. Write: sessions/<YYYY-MM-DD-HHMM>.md (session template)
-4. Overwrite: sessions/latest.md (copy of above)
-5. Update: context/{current-state,open-questions,next-steps}.md
-6. Append: decisions/decision-log.md with this session's decisions
-7. Create: individual decisions/<YYYY-MM-DD>-<slug>.md for major choices
-8. Update: story.md if significant pivot or milestone
-9. Update: _meta/scan-history.json (append session entry)
-10. Git commit if enabled
-```
-
-#### `overview`
-```
-1. Read all files in ./mind/
-2. Synthesize into coherent narrative
-3. Use Write tool to create ./mind/overview.md
-4. Extract key decisions and architectural points
+1.  Analyze entire conversation transcript (this session)
+2.  Extract: decisions made, what was built, blockers, questions, next steps
+3.  Search the web if new libraries, integrations, or APIs were introduced during the session to verify details
+4.  Write: sessions/<YYYY-MM-DD-HHMM>.md (session template)
+5.  Overwrite: sessions/latest.md (copy of above)
+6.  Update: context/{current-state,open-questions,next-steps}.md
+7.  Update/create affected wiki guides in `guides/` following Berkeley & IBM guidelines
+8.  Append: decisions/decision-log.md with this session's decisions
+9.  Create: individual decisions/<YYYY-MM-DD>-<slug>.md for major choices
+10. Update: story.md if significant pivot or milestone
+11. Update: _meta/scan-history.json (append session entry)
+12. Git commit if enabled
 ```
 
-#### `onboarding`
+## Example
+
+**User**: `/second-mind restore`
+
+**Output**:
 ```
-1. Read: story.md, architecture.md, tech-stack.md, decisions/decision-log.md, roadmap.md, current-state.md
-2. Synthesize into plain-language narrative
-3. Use Write tool to create ./mind/START-HERE.md
-4. Apply quality checks: no jargon, links included, readable for zero context
-```
+🧠 Second Mind — Session Restore
 
-### File I/O References
+📅 Last session: 2026-05-28 18:30
+🎯 You were working on: Implementing JWT authentication middleware
 
-**References loaded as needed:**
-- `[[references/obsidian-templates.md]]` — File templates for consistency
-- `[[references/extraction-guide.md]]` — How to extract decisions/insights from text
+Current status:
+  ✅ Working: Database schema migrations for users
+  🔧 In progress: JWT token generation and validation middleware
+  ❌ Broken: Refresh token cookie security policy
 
-**Exclusions applied:**
-- Uses patterns from scan exclusions to skip noise
-- Details in `[[references/scan-exclusions.md]]`
+❓ Open questions:
+  - Do we need to support auth providers like GitHub or Google?
 
----
-
-## CHAT LOG HANDLING
-
-At INIT, if no path is auto-detected:
-
-```
-Where are your past chat logs?
-(Provide folder path or drag export files here)
-Supported: JSON export, plain text .txt, .md conversation files
+👉 Suggested first step: Verify the JWT token cookie options under guides/auth-security.md
 ```
 
----
+## Tips
 
-## WIKILINK CONVENTION
-
-All cross-document references use Obsidian wikilink syntax:
-```markdown
-See [[architecture]] for details.
-This implements [[decisions/2025-05-19-auth-jwt]].
-Related: [[knowledge-base/components/AuthService]]
-```
-
-Obsidian renders these as clickable links; plain markdown readers show them as text.
+- Let the agent use the search tool during documentation generation to pull exact library specifications.
+- Commit the `./mind/` folder to git so that documentation is treated as code.
+- Ensure all API endpoints in `guides/api-integrations.md` explicitly detail inputs, output contracts, and exceptions.
+- Add files to the `.npmignore` or `.gitignore` if you do not want private session logs exposed.

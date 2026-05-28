@@ -83,6 +83,7 @@ Once installed, simply type these commands to your agent:
 | Command | What it does |
 |---------|--------------|
 | `/second-mind init` | Scans the project, extracts history, and builds your vault from scratch. |
+| `/second-mind wiki` | Explicitly generates or updates all technical guides in your code wiki (`guides/`). |
 | `/second-mind restore` | Run this when starting a new chat to get instantly caught up on your progress. |
 | `/second-mind capture` | Manually captures a quick decision mid-session. |
 | `/second-mind update` | Run this before closing your chat to save your session's progress. |
@@ -99,6 +100,14 @@ mind/
 ├── story.md                   # How the project evolved (prose)
 ├── roadmap.md                 # Future goals with reasoning
 ├── overview.md                # Fresh project overview (regenerated)
+│
+├── guides/                    # Code Wiki & Guides (Supabase-style)
+│   ├── database.md            # Database, schema, and queries
+│   ├── auth-security.md       # Authentication and security
+│   ├── api-integrations.md    # API contracts and third-party APIs
+│   ├── deployment.md          # Deployment and hosting details
+│   ├── workflows.md           # Local setup and workflow procedures
+│   └── standards.md           # Code documentation standards
 │
 ├── knowledge-base/
 │   ├── architecture.md        # System design and layers
